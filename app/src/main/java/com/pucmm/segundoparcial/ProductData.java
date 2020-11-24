@@ -7,17 +7,26 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 //Define table name
-@Entity(tableName = "table_name")
-public class MainData implements Serializable {
+@Entity(tableName = "table_product")
+public class ProductData implements Serializable {
     //Create id column
     @PrimaryKey(autoGenerate = true)
     private int ID;
 
-    //Create text column
-    @ColumnInfo(name = "text")
-    private String text;
+    //Create name column
+    @ColumnInfo(name = "name")
+    private String name;
+
+    //Create amount column
+    @ColumnInfo(name = "amount")
+    private int amount;
+
+    //Create category column
+    @ColumnInfo(name = "category")
+    private String category;
 
     //Generate getter and setter
+
 
     public int getID() {
         return ID;
@@ -27,11 +36,27 @@ public class MainData implements Serializable {
         this.ID = ID;
     }
 
-    public String getText() {
-        return text;
+    public String getName() {
+        return name;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

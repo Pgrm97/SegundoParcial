@@ -10,28 +10,28 @@ import java.util.List;
 import static androidx.room.OnConflictStrategy.REPLACE;
 
 @Dao
-public interface MainDao {
+public interface ProductDao {
     //Insert query
     @Insert(onConflict = REPLACE)
-    void insert(MainData mainData);
+    void insert(ProductData productData);
 
     //Delete query
     @Delete
-    void delete(MainData mainData);
+    void delete(ProductData productData);
 
     //Delete all query
     @Delete
-    void reset(List<MainData> mainData);
+    void reset(List<ProductData> productData);
 
     //Update query
-    @Query("UPDATE table_name SET text = :sText WHERE ID = :sID")
-    void update(int sID, String sText);
+    @Query("UPDATE table_product SET name = :sName, amount = :sAmount, category = :sCategory WHERE ID = :sID")
+    void update(int sID, String sName, int sAmount, String sCategory);
 
     //Get all data query
-    @Query("SELECT * FROM table_name")
-    List<MainData> getAll();
+    @Query("SELECT * FROM table_product")
+    List<ProductData> getAll();
 
     //Get all sText
-    @Query("SELECT text FROM table_name")
-    List<String> getAllCategories();
+    @Query("SELECT name FROM table_product")
+    List<String> getAllProducts();
 }
