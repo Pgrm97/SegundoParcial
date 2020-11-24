@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -34,6 +35,8 @@ public class HomeFragment extends Fragment {
     EditText editText;
     Button btAdd, btReset;
     RecyclerView recyclerView;
+
+    Button btSave;
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -100,6 +103,16 @@ public class HomeFragment extends Fragment {
                 dataList.clear();
                 dataList.addAll(database.mainDao().getAll());
                 adapter.notifyDataSetChanged();
+            }
+        });
+
+        btSave = root.findViewById(R.id.btnSaveCategories);
+
+        btSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getParentFragmentManager();
+                fm.popBackStackImmediate();
             }
         });
 

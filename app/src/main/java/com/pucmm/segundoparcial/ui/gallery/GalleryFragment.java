@@ -13,13 +13,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.pucmm.segundoparcial.AddCategoryFragment;
 import com.pucmm.segundoparcial.MainAdapter;
 import com.pucmm.segundoparcial.MainData;
 import com.pucmm.segundoparcial.R;
 import com.pucmm.segundoparcial.RoomDB;
+import com.pucmm.segundoparcial.ui.home.HomeFragment;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -33,6 +36,7 @@ public class GalleryFragment extends Fragment {
     Spinner categorySpinner;
     RoomDB database;
     MainAdapter adapter;
+    Button btnAddCategory;
     List<String> dataList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -51,6 +55,19 @@ public class GalleryFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item,  dataList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(adapter);
+
+        btnAddCategory = root.findViewById(R.id.buttonAddCategoryinAddProduct);
+
+        btnAddCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HomeFragment addCategoryFragment = new HomeFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, addCategoryFragment, "AddCategory");
+                transaction.addToBackStack("AddCategory");
+                transaction.commit();
+            }
+        });
 
         Button saveProduct = root.findViewById(R.id.buttonSaveAddProduct);
         saveProduct.setOnClickListener(new View.OnClickListener() {
