@@ -30,4 +30,8 @@ public interface MainDao {
     //Get all data query
     @Query("SELECT * FROM table_name")
     List<MainData> getAll();
+
+    //Get all sText
+    @Query("SELECT text FROM table_name")
+    List<String> getAllCategories();
 }
