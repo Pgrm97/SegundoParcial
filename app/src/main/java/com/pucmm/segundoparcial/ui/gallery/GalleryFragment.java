@@ -16,10 +16,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.pucmm.segundoparcial.AddCategoryFragment;
 import com.pucmm.segundoparcial.MainAdapter;
 import com.pucmm.segundoparcial.MainData;
+import com.pucmm.segundoparcial.ProductAdapter;
+import com.pucmm.segundoparcial.ProductData;
 import com.pucmm.segundoparcial.R;
 import com.pucmm.segundoparcial.RoomDB;
 import com.pucmm.segundoparcial.ui.home.HomeFragment;
@@ -35,9 +38,12 @@ public class GalleryFragment extends Fragment {
     EditText inputNameAddProduct, inputNumberAddProduct;
     Spinner categorySpinner;
     RoomDB database;
-    MainAdapter adapter;
-    Button btnAddCategory;
+    Button btnAddCategory, btnSaveAddProduct;
     List<String> dataList = new ArrayList<>();
+
+    List<ProductData> productList = new ArrayList<>();
+    LinearLayoutManager linearLayoutManager;
+    ProductAdapter productAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -69,13 +75,45 @@ public class GalleryFragment extends Fragment {
             }
         });
 
-        Button saveProduct = root.findViewById(R.id.buttonSaveAddProduct);
-        saveProduct.setOnClickListener(new View.OnClickListener() {
+        btnSaveAddProduct = root.findViewById(R.id.buttonSaveAddProduct);
+
+        inputNameAddProduct = root.findViewById(R.id.inputNameAddProduct);
+        inputNumberAddProduct = root.findViewById(R.id.inputNumberAddProduct);
+
+        //Initialize database
+        database = RoomDB.getInstance(getActivity());
+        //Store database value in data list
+        productList = database.productDao().getAll();
+
+        //Initialize adapter
+        productAdapter = new ProductAdapter(getActivity(), productList);
+
+        btnSaveAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //Get String from edit text
+                String sName = inputNameAddProduct.getText().toString().trim();
+                String sAmount = inputNumberAddProduct.getText().toString().trim();
+                //Check condition
+                if(!sName.equals("") && !sAmount.equals("") ){
+                    //Initialize main data
+                    ProductData data = new ProductData();
+                    //Set text on main data
+                    data.setName(sName);
+                    data.setAmount(Integer.parseInt(sAmount));
+                    //Insert text in database
+                    database.productDao().insert(data);
+                    //Clear edit text
+                    inputNameAddProduct.setText("");
+                    inputNumberAddProduct.setText("");
+                    //Notify when data is inserted
+                    productList.clear();
+                    productList.addAll(database.productDao().getAll());
+                    productAdapter.notifyDataSetChanged();
+                }
             }
         });
+
         return root;
     }
 }

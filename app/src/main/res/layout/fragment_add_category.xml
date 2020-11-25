@@ -4,4 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="AddCategoryFragment"/>
+    tools:context="AddCategoryFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_product"
+        android:layout_width="match_parent"
+        android:layout_height="352dp"
+        android:layout_marginTop="8dp"
+        tools:listitem="@layout/list_row_product" />
+
+</LinearLayout>

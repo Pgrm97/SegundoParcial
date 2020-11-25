@@ -48,6 +48,10 @@ public class ProductData implements Serializable {
         return amount;
     }
 
+    public String getAmountString() {
+        return Integer.toString(amount);
+    }
+
     public void setAmount(int amount) {
         this.amount = amount;
     }
