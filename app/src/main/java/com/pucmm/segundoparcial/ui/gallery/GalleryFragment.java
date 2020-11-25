@@ -80,6 +80,8 @@ public class GalleryFragment extends Fragment {
         inputNameAddProduct = root.findViewById(R.id.inputNameAddProduct);
         inputNumberAddProduct = root.findViewById(R.id.inputNumberAddProduct);
 
+        categorySpinner = root.findViewById(R.id.spinnerAddProduct);
+
         //Initialize database
         database = RoomDB.getInstance(getActivity());
         //Store database value in data list
@@ -94,13 +96,15 @@ public class GalleryFragment extends Fragment {
                 //Get String from edit text
                 String sName = inputNameAddProduct.getText().toString().trim();
                 String sAmount = inputNumberAddProduct.getText().toString().trim();
+                String sCategory = categorySpinner.getSelectedItem().toString();
                 //Check condition
-                if(!sName.equals("") && !sAmount.equals("") ){
+                if(!sName.equals("") && !sAmount.equals("") && !sCategory.equals("")){
                     //Initialize main data
                     ProductData data = new ProductData();
                     //Set text on main data
                     data.setName(sName);
                     data.setAmount(Integer.parseInt(sAmount));
+                    data.setCategory(sCategory);
                     //Insert text in database
                     database.productDao().insert(data);
                     //Clear edit text
@@ -111,6 +115,12 @@ public class GalleryFragment extends Fragment {
                     productList.addAll(database.productDao().getAll());
                     productAdapter.notifyDataSetChanged();
                 }
+
+                AddCategoryFragment homeFragment = new AddCategoryFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, homeFragment, "Home Fragment");
+                //transaction.addToBackStack("AddCategory");
+                transaction.commit();
             }
         });
 
