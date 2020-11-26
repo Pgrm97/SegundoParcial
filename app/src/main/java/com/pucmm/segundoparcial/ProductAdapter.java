@@ -52,9 +52,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         //Set category on category view
         holder.categoryView.setText(data.getCategory());
 
-//        holder.btEdit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+        holder.btEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
 //                //Initialize main data
 //                MainData d = dataList.get(holder.getAdapterPosition());
 //                //Get id
@@ -98,8 +99,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 //                        notifyDataSetChanged();
 //                    }
 //                });
-//            }
-//        });
+            }
+        });
 
         holder.btDelete.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -114,13 +114,19 @@ public class GalleryFragment extends Fragment {
                     productList.clear();
                     productList.addAll(database.productDao().getAll());
                     productAdapter.notifyDataSetChanged();
-                }
 
-                AddCategoryFragment homeFragment = new AddCategoryFragment();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, homeFragment, "Home Fragment");
-                //transaction.addToBackStack("AddCategory");
-                transaction.commit();
+                    AddCategoryFragment homeFragment = new AddCategoryFragment();
+                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment, homeFragment, "Home Fragment");
+                    //transaction.addToBackStack("AddCategory");
+                    transaction.commit();
+                }
+                if(sName.equals("")){
+                    inputNameAddProduct.setError("Please enter a name!");
+                }
+                if(sAmount.equals("")){
+                    inputNumberAddProduct.setError("Please enter a price!");
+                }
             }
         });
 

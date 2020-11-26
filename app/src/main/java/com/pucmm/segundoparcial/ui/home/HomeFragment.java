@@ -91,6 +91,9 @@ public class HomeFragment extends Fragment {
                     dataList.addAll(database.mainDao().getAll());
                     adapter.notifyDataSetChanged();
                 }
+                if(sText.equals("")){
+                    editText.setError("Please enter a category!");
+                }
             }
         });
 
