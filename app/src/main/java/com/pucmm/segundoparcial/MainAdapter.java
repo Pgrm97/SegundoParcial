@@ -1,7 +1,9 @@
 package com.pucmm.segundoparcial;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -104,16 +106,30 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         holder.btDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Initialize main data
-                MainData d = dataList.get(holder.getAdapterPosition());
-                //Delete text from database
-                database.mainDao().delete(d);
+                AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                alert.setTitle("Delete entry");
+                alert.setMessage("Are you sure you want to delete?");
+                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Initialize main data
+                        MainData d = dataList.get(holder.getAdapterPosition());
+                        //Delete text from database
+                        database.mainDao().delete(d);
 
-                //Notify when data is deleted
-                int position = holder.getAdapterPosition();
-                dataList.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position,  dataList.size());
+                        //Notify when data is deleted
+                        int position = holder.getAdapterPosition();
+                        dataList.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position,  dataList.size());
+                    }
+                });
+                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // close dialog
+                        dialog.cancel();
+                    }
+                });
+                alert.show();
             }
         });
     }
